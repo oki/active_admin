@@ -2,10 +2,13 @@ source 'http://rubygems.org'
 
 gemspec
 
-require File.expand_path('../spec/support/detect_rails_version', __FILE__)
+ACTIVE_ADMIN_PATH = File.dirname(__FILE__) unless defined?(ACTIVE_ADMIN_PATH)
+
+require File.expand_path('spec/support/detect_rails_version', ACTIVE_ADMIN_PATH)
 
 rails_version = detect_rails_version
 gem 'rails',          rails_version
+gem 'bourbon'
 
 case rails_version
 when /^3\.0/
@@ -19,17 +22,19 @@ else
 end
 
 group :development, :test do
-  gem 'sqlite3-ruby',   :require => 'sqlite3'
+  gem 'sqlite3'
 
   gem 'rake',           '~> 0.9.2.2', :require => false
   gem 'haml',           '~> 3.1.1', :require => false
   gem 'yard'
   gem 'rdiscount' # For yard
+  gem "sprockets"
+  gem 'rails-i18n' # Gives us default i18n for many languages
+  gem 'parallel_tests'
 end
 
 group :test do
-  gem 'rspec-rails',    '~> 2.8.1'
-  gem 'cucumber', '1.1.4'
+  gem 'rspec-rails',    '~> 2.9.0'
   gem 'cucumber-rails', '1.2.1', :require => false
   gem 'capybara',       '1.1.2'
   gem 'database_cleaner'
@@ -37,4 +42,6 @@ group :test do
   gem 'launchy'
   gem 'jslint_on_rails',    '~> 1.0.6'
   gem 'guard-rspec'
+  gem "guard-coffeescript"
+  gem 'jasmine'
 end
